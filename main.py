@@ -1,5 +1,7 @@
 from filter_dictionary import open_dictionary
 import random
+import tkinter as tk
+from tkinter import messagebox
 
 
 class Crossword:
@@ -78,16 +80,47 @@ class Crossword:
                     self.questions[answer] = question
                     break
         print(self.questions)
-                
+
+
+class CrosswordGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Crossword Game")
+        self.crossword = Crossword()
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.canvas = tk.Canvas(self.root, width=500, height=500)
+        self.canvas.pack()
+
+        self.generate_button = tk.Button(self.root, text="Generate Crossword", command=self.generate_crossword)
+        self.generate_button.pack()
+
+    def generate_crossword(self):
+        self.crossword.create_crossword()
+        self.crossword.generate_questions()
+        self.display_crossword()
+
+    def display_crossword(self):
+        self.canvas.delete("all")
+        cell_size = 30
+        for i, row in enumerate(self.crossword.crossword):
+            for j, cell in enumerate(row):
+                x1, y1 = j * cell_size, i * cell_size
+                x2, y2 = x1 + cell_size, y1 + cell_size
+                self.canvas.create_rectangle(x1, y1, x2, y2, fill="white")
+                if cell != '*':
+                    self.canvas.create_text(x1 + cell_size / 2, y1 + cell_size / 2, text=cell)
+
+
 if __name__ == "__main__":
     try:
-        crossword = Crossword()
-        crossword.create_crossword()
-        crossword.generate_questions()
-        print(crossword)
+        root = tk.Tk()
+        app = CrosswordGUI(root)
+        root.mainloop()
     except FileNotFoundError as e:
-        print(f"Error: {e}")
+        messagebox.showerror("Error", f"Error: {e}")
     except json.JSONDecodeError as e:
-        print(f"Error: {e}")
+        messagebox.showerror("Error", f"Error: {e}")
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        messagebox.showerror("Error", f"An unexpected error occurred: {e}")

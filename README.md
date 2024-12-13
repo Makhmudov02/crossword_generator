@@ -51,3 +51,41 @@ Here are some examples of how to use the tool:
 
 ### v1.0.0
 - Initial release
+
+## Graphical Version
+
+### How to Use the Graphical Version
+
+1. Clone the repository:
+    ```
+    git clone https://github.com/yourusername/crossword_generator.git
+    cd crossword_generator
+    ```
+
+2. Install the required dependencies:
+    ```
+    pip install -r requirements.txt
+    ```
+
+3. Run the graphical version:
+    ```
+    python main.py
+    ```
+
+### Examples
+
+Here are some examples of how to use the graphical version:
+
+- To generate a crossword with the default settings:
+    ```
+    python main.py
+    ```
+
+- To generate a crossword with a custom keyword and size:
+    ```
+    python main.py --keyword "example" --size 10
+    ```
+
+### Required Dependencies
+
+- `tkinter`: The library used for creating the graphical user interface.
